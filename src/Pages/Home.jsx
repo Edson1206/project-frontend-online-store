@@ -26,7 +26,7 @@ class Home extends React.Component {
     console.log(listCategories);
     return (
       <div>
-       <Link data-testid="shopping-cart-button" to="/shoppingCart">ShoppingCart</Link>
+        <Link data-testid="shopping-cart-button" to="/shoppingCart">ShoppingCart</Link>
         <aside>
           <ul>
             {listCategories.map((category) => (
