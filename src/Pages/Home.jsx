@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { getCategories } from '../services/api';
 
 class Home extends React.Component {
@@ -25,6 +26,7 @@ class Home extends React.Component {
     console.log(listCategories);
     return (
       <div>
+       <Link data-testid="shopping-cart-button" to="/shoppingCart">ShoppingCart</Link>
         <aside>
           <ul>
             {listCategories.map((category) => (
