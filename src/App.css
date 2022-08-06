@@ -43,7 +43,7 @@
 
 
 li {
-  list-style:none;
+  list-style: none;
 }
 
 .container-section-aside {
@@ -58,28 +58,21 @@ li {
 }
 
 .div-category-item {
+  align-items: center;
   border: #282c34 solid 1px;
-  width: 200px;
+  border-radius: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
-  border-radius: 30px;
   font-size: 14px;
+  justify-content: center;
+  margin: 10px;
   text-align: center;
+  width: 200px;
 }
 
 .container-header-home {
   display: flex;
-  justify-content:center;
-  width: 100%;
   flex-wrap: wrap;
-}
-
-/* .forms-header-home {
-  display: flex;
   justify-content: center;
-  flex-direction: column;
-  width: 20%;
-} */
+  width: 100%;
+}
