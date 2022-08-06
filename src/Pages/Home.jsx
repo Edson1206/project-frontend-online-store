@@ -82,11 +82,17 @@ class Home extends React.Component {
           <section className="container-section">
             { itemsSearched.length === 0 ? <p>Nenhum produto foi encontrado</p>
               : (itemsSearched.map((item) => (
-                <div key={ item.id } data-testid="product" className="div-category-item">
-                  <img src={ item.thumbnail } alt={ item.title } />
-                  <p>{ item.title }</p>
-                  <h3>{ item.price }</h3>
-                </div>
+                <Link
+                  data-testid="product-detail-link"
+                  to={ `/product/${item.id}/${searchBar}` }
+                  key={ item.id }
+                >
+                  <div data-testid="product" className="div-category-item">
+                    <img src={ item.thumbnail } alt={ item.title } />
+                    <p>{ item.title }</p>
+                    <h3>{ item.price }</h3>
+                  </div>
+                </Link>
               )))}
           </section>
         </div>
