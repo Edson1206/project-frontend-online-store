@@ -36,7 +36,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { searchBar, listCategories, itemsSearched, categoriesSearched } = this.state;
+    const { searchBar, listCategories, itemsSearched } = this.state;
     return (
       <div>
         <Link data-testid="shopping-cart-button" to="/shoppingCart">ShoppingCart</Link>
@@ -93,7 +93,6 @@ class Home extends React.Component {
         </form>
         { itemsSearched.length === 0 ? <p>Nenhum produto foi encontrado</p>
           : (itemsSearched.map((item) => (
-            <div key={ item.id } data-testid="product">
               <p>{ item.title }</p>
               <img src={ item.thumbnail } alt={ item.title } />
               <p>{ item.price }</p>
