@@ -40,3 +40,46 @@
     transform: rotate(360deg);
   }
 }
+
+
+li {
+  list-style:none;
+}
+
+.container-section-aside {
+  display: flex;
+  width: 100%;
+}
+
+.container-section {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.div-category-item {
+  border: #282c34 solid 1px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  border-radius: 30px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.container-header-home {
+  display: flex;
+  justify-content:center;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+/* .forms-header-home {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 20%;
+} */
