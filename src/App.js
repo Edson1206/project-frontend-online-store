@@ -8,17 +8,45 @@ import ProductCard from './Pages/ProductCard';
 class App extends React.Component {
   constructor() {
     super();
-    this.state = { ItemsCarrinho: [] };
+    this.state = { ItemsCarrinho: [],
+      itemsShow: [],
+    };
   }
 
   salvaNoCarrinho = (item) => {
     this.setState((prevState) => ({
       ItemsCarrinho: [...prevState.ItemsCarrinho, item],
     }));
+    const { ItemsCarrinho } = this.state;
+    if (!ItemsCarrinho.some((itemB) => itemB.id === item.id)) {
+      this.setState((prevState) => ({
+        itemsShow: [...prevState.itemsShow, item],
+      }));
+    }
+  }
+
+  increaseButton = (item) => {
+    this.setState((prevState) => ({
+      ItemsCarrinho: [...prevState.ItemsCarrinho, item],
+    }));
+  }
+
+  decreaseButton = (item) => {
+    const { ItemsCarrinho } = this.state;
+    const arr = ItemsCarrinho;
+    for (let i = 0; i < ItemsCarrinho.length; i += 1) {
+      if (ItemsCarrinho[i].id === item.id) {
+        ItemsCarrinho.splice(i, 1);
+        break;
+      }
+    }
+    this.setState(() => ({
+      ItemsCarrinho: arr,
+    }));
   }
 
   render() {
-    const { ItemsCarrinho } = this.state;
+    const { ItemsCarrinho, itemsShow } = this.state;
     return (
       <BrowserRouter>
         <div>
@@ -28,6 +56,9 @@ class App extends React.Component {
               path="/shoppingCart"
               render={ () => (<ShoppingCart
                 ItemsCarrinho={ ItemsCarrinho }
+                itemsShow={ itemsShow }
+                increaseButton={ this.increaseButton }
+                decreaseButton={ this.decreaseButton }
               />) }
             />
             <Route
