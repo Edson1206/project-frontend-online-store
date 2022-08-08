@@ -9,6 +9,7 @@ class ProductCard extends React.Component {
 
     this.state = {
       product: {},
+      inputNumber: 0,
     };
   }
 
@@ -16,11 +17,15 @@ class ProductCard extends React.Component {
     const { match: { params: { id } } } = this.props;
     const item = await getProductsFromId(id);
     this.setState({ product: item });
-    console.log(item);
   }
 
+  handleChange = ({ target: { name, value } }) => {
+    this.setState({ [name]: value });
+  };
+
   render() {
-    const { product } = this.state;
+    const { product, inputNumber } = this.state;
+    const { salvaNoCarrinho } = this.props;
     return (
       <div>
         <p data-testid="product-detail-name">{ product.title }</p>
@@ -34,8 +39,21 @@ class ProductCard extends React.Component {
           data-testid="shopping-cart-button"
           to="/shoppingCart"
         >
-          Adicionar ao carrinho
+          Shopping Cart
         </Link>
+        <input
+          onChange={ this.handleChange }
+          value={ inputNumber }
+          type="number"
+          name="inputNumber"
+        />
+        <button
+          data-testid="product-detail-add-to-cart"
+          onClick={ () => salvaNoCarrinho(product) }
+          type="button"
+        >
+          Adicionar ao Carrinho
+        </button>
       </div>
     );
   }
@@ -47,6 +65,7 @@ ProductCard.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  salvaNoCarrinho: PropTypes.func.isRequired,
 };
 
 export default ProductCard;

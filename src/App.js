@@ -37,7 +37,14 @@ class App extends React.Component {
                 salvaNoCarrinho={ this.salvaNoCarrinho }
               />) }
             />
-            <Route exact path="/product/:id" component={ ProductCard } />
+            <Route
+              exact
+              path="/product/:id"
+              render={ (props) => (<ProductCard
+                { ...props }
+                salvaNoCarrinho={ this.salvaNoCarrinho }
+              />) }
+            />
           </Switch>
         </div>
       </BrowserRouter>
