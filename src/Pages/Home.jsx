@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 
 class Home extends React.Component {
@@ -36,6 +37,7 @@ class Home extends React.Component {
 
   render() {
     const { searchBar, listCategories, itemsSearched } = this.state;
+    const { salvaNoCarrinho } = this.props;
     return (
       <div className="container-home">
         <header className="container-header-home">
@@ -82,17 +84,26 @@ class Home extends React.Component {
           <section className="container-section">
             { itemsSearched.length === 0 ? <p>Nenhum produto foi encontrado</p>
               : (itemsSearched.map((item) => (
-                <Link
-                  data-testid="product-detail-link"
-                  to={ `/product/${item.id}/${searchBar}` }
-                  key={ item.id }
-                >
-                  <div data-testid="product" className="div-category-item">
-                    <img src={ item.thumbnail } alt={ item.title } />
-                    <p>{ item.title }</p>
-                    <h3>{ item.price }</h3>
-                  </div>
-                </Link>
+                <div key={ item.id }>
+                  <Link
+                    data-testid="product-detail-link"
+                    to={ `/product/${item.id}/${searchBar}` }
+                  >
+                    <div data-testid="product" className="div-category-item">
+                      <img src={ item.thumbnail } alt={ item.title } />
+                      <p>{ item.title }</p>
+                      <h3>{ item.price }</h3>
+                    </div>
+                  </Link>
+                  <button
+                    type="button"
+                    data-testid="product-add-to-cart"
+                    onClick={ () => salvaNoCarrinho(item) }
+                  >
+                    Adicionar ao carrinho
+
+                  </button>
+                </div>
               )))}
           </section>
         </div>
@@ -100,5 +111,8 @@ class Home extends React.Component {
     );
   }
 }
+Home.propTypes = {
+  salvaNoCarrinho: PropTypes.func.isRequired,
+};
 
 export default Home;
