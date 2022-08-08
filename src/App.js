@@ -8,9 +8,17 @@ import ProductCard from './Pages/ProductCard';
 class App extends React.Component {
   constructor() {
     super();
-    this.state = { ItemsCarrinho: [],
-      itemsShow: [],
-    };
+    if (JSON.parse(localStorage.getItem('produtos'))) {
+      this.state = {
+        ItemsCarrinho: [...JSON.parse(localStorage.getItem('produtos'))],
+        itemsShow: [...JSON.parse(localStorage.getItem('produtosMostrados'))],
+      };
+    } else {
+      this.state = {
+        ItemsCarrinho: [],
+        itemsShow: [],
+      };
+    }
   }
 
   salvaNoCarrinho = (item) => {
@@ -34,6 +42,10 @@ class App extends React.Component {
   decreaseButton = (item) => {
     const { ItemsCarrinho } = this.state;
     const arr = ItemsCarrinho;
+    const itemsNoArray = ItemsCarrinho.filter((e) => e.id === item.id);
+    if (itemsNoArray.length === 1) {
+      return '';
+    }
     for (let i = 0; i < ItemsCarrinho.length; i += 1) {
       if (ItemsCarrinho[i].id === item.id) {
         ItemsCarrinho.splice(i, 1);
@@ -45,8 +57,17 @@ class App extends React.Component {
     }));
   }
 
+  removeItem = (item) => {
+    const { ItemsCarrinho, itemsShow } = this.state;
+    const arr1 = itemsShow.filter((i) => i.id !== item.id);
+    const arr = ItemsCarrinho.filter((e) => e.id !== item.id);
+    this.setState({ ItemsCarrinho: arr, itemsShow: arr1 });
+  }
+
   render() {
     const { ItemsCarrinho, itemsShow } = this.state;
+    localStorage.setItem('produtos', JSON.stringify(ItemsCarrinho));
+    localStorage.setItem('produtosMostrados', JSON.stringify(itemsShow));
     return (
       <BrowserRouter>
         <div>
@@ -59,6 +80,7 @@ class App extends React.Component {
                 itemsShow={ itemsShow }
                 increaseButton={ this.increaseButton }
                 decreaseButton={ this.decreaseButton }
+                removeItem={ this.removeItem }
               />) }
             />
             <Route
@@ -74,6 +96,9 @@ class App extends React.Component {
               render={ (props) => (<ProductCard
                 { ...props }
                 salvaNoCarrinho={ this.salvaNoCarrinho }
+                ItemsCarrinho={ ItemsCarrinho }
+                increaseButton={ this.increaseButton }
+                decreaseButton={ this.decreaseButton }
               />) }
             />
           </Switch>

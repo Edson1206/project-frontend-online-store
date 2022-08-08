@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 class ShoppingCart extends React.Component {
   render() {
-    const { ItemsCarrinho, itemsShow, increaseButton, decreaseButton } = this.props;
+    const { ItemsCarrinho, itemsShow,
+      increaseButton, decreaseButton, removeItem } = this.props;
     return (
       <div>
         {ItemsCarrinho.length === 0 ? (
@@ -33,6 +34,13 @@ class ShoppingCart extends React.Component {
               >
                 +
               </button>
+              <button
+                type="button"
+                data-testid="remove-product"
+                onClick={ () => removeItem(item) }
+              >
+                Remover
+              </button>
             </div>
           </div>)))}
       </div>
@@ -45,6 +53,7 @@ ShoppingCart.propTypes = {
   itemsShow: PropTypes.arrayOf(PropTypes.shape({ })).isRequired,
   increaseButton: PropTypes.func.isRequired,
   decreaseButton: PropTypes.func.isRequired,
+  removeItem: PropTypes.func.isRequired,
 };
 
 export default ShoppingCart;
