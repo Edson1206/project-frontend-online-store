@@ -10,7 +10,6 @@ class ProductCard extends React.Component {
     this.state = {
       product: {},
       inputNumber: 0,
-      // storageList: [],
     };
   }
 
@@ -18,16 +17,11 @@ class ProductCard extends React.Component {
     const { match: { params: { id } } } = this.props;
     const item = await getProductsFromId(id);
     this.setState({ product: item });
-    console.log(item);
   }
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value });
   };
-
-  addToCart = () => {
-
-  }
 
   render() {
     const { product, inputNumber } = this.state;
