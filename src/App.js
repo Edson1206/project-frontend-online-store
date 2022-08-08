@@ -59,8 +59,8 @@ class App extends React.Component {
 
   removeItem = (item) => {
     const { ItemsCarrinho, itemsShow } = this.state;
-    const arr1 = itemsShow.filter((i) => i.id !== item.id);
-    const arr = ItemsCarrinho.filter((e) => e.id !== item.id);
+    const arr1 = itemsShow.filter((itensMostrados) => itensMostrados.id !== item.id);
+    const arr = ItemsCarrinho.filter((itensNoCarrinho) => itensNoCarrinho.id !== item.id);
     this.setState({ ItemsCarrinho: arr, itemsShow: arr1 });
   }
 
