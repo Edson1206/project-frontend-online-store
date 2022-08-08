@@ -16,7 +16,7 @@ class ShoppingCart extends React.Component {
               <h3>{ item.price }</h3>
               <p data-testid="shopping-cart-product-quantity">
                 {
-                  ItemsCarrinho.filter((e) => e.id === item.id).length
+                  ItemsCarrinho.filter((element) => e.id === element.id).length
                 }
               </p>
             </div>
