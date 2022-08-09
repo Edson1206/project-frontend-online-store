@@ -16,7 +16,7 @@ class ProductCard extends React.Component {
         textArea: '',
         inputEmail: '',
         avaliattion: '',
-        inputPass: true,
+        inputPass: false,
       };
     } else {
       this.state = {
@@ -26,7 +26,7 @@ class ProductCard extends React.Component {
         inputEmail: '',
         avaliattion: '',
         completeComent: [],
-        inputPass: true,
+        inputPass: false,
       };
     }
   }
@@ -39,17 +39,8 @@ class ProductCard extends React.Component {
     });
   }
 
-  testInput = () => {
-    const { inputEmail } = this.state;
-    if (inputEmail.includes('@') && inputEmail.includes('.com')) {
-      this.setState({
-        inputPass: false,
-      });
-    }
-  }
-
   handleChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value }, () => this.testInput());
+    this.setState({ [name]: value });
   };
 
   handleChangeRadios = ({ target: { value } }) => {
@@ -63,18 +54,17 @@ class ProductCard extends React.Component {
       avaliacao: avaliattion,
       comentario: textArea,
     };
-    if (inputEmail.includes('@') && inputEmail.includes('.com')) {
+    if (inputEmail.includes('@') && inputEmail.includes('.com') && avaliattion !== '') {
       this.setState((prevState) => ({
         completeComent: [...prevState.completeComent, coment],
         textArea: '',
         inputEmail: '',
         avaliattion: '',
+        inputPass: false,
       }));
     } else {
       this.setState({
-        textArea: '',
-        inputEmail: '',
-        avaliattion: '',
+        inputPass: true,
       });
     }
   }
@@ -125,8 +115,9 @@ class ProductCard extends React.Component {
           </label>
           <label htmlFor="avaliattion">
             Avaliação
-            <label htmlFor="avaliattion" data-testid="1-rating">
+            <label htmlFor="1">
               <input
+                data-testid="1-rating"
                 onChange={ this.handleChangeRadios }
                 value="1"
                 id="1"
@@ -135,8 +126,9 @@ class ProductCard extends React.Component {
               />
               1
             </label>
-            <label htmlFor="avaliattion" data-testid="2-rating">
+            <label htmlFor="2">
               <input
+                data-testid="2-rating"
                 onChange={ this.handleChangeRadios }
                 value="2"
                 id="2"
@@ -145,8 +137,9 @@ class ProductCard extends React.Component {
               />
               2
             </label>
-            <label htmlFor="avaliattion" data-testid="3-rating">
+            <label htmlFor="3">
               <input
+                data-testid="3-rating"
                 onChange={ this.handleChangeRadios }
                 value="3"
                 id="3"
@@ -155,8 +148,9 @@ class ProductCard extends React.Component {
               />
               3
             </label>
-            <label htmlFor="avaliattion" data-testid="4-rating">
+            <label htmlFor="4">
               <input
+                data-testid="4-rating"
                 onChange={ this.handleChangeRadios }
                 value="4"
                 id="4"
@@ -165,8 +159,9 @@ class ProductCard extends React.Component {
               />
               4
             </label>
-            <label htmlFor="avaliattion" data-testid="5-rating">
+            <label htmlFor="5">
               <input
+                data-testid="5-rating"
                 onChange={ this.handleChangeRadios }
                 value="5"
                 type="radio"
@@ -198,7 +193,6 @@ class ProductCard extends React.Component {
               <p data-testid="review-card-email">{ coment.email }</p>
               <label data-testid="review-card-rating" htmlFor="radio-review">
                 <input
-                  data-testid="1-rating"
                   type="radio"
                   name="radio-review"
                   value="1"
@@ -206,7 +200,6 @@ class ProductCard extends React.Component {
                 />
                 1
                 <input
-                  data-testid="2-rating"
                   type="radio"
                   name="radio-review"
                   value="2"
@@ -214,7 +207,6 @@ class ProductCard extends React.Component {
                 />
                 2
                 <input
-                  data-testid="3-rating"
                   type="radio"
                   name="radio-review"
                   value="3"
@@ -222,7 +214,6 @@ class ProductCard extends React.Component {
                 />
                 3
                 <input
-                  data-testid="4-rating"
                   type="radio"
                   name="radio-review"
                   value="4"
@@ -230,7 +221,6 @@ class ProductCard extends React.Component {
                 />
                 4
                 <input
-                  data-testid="5-rating"
                   type="radio"
                   name="radio-review"
                   value="5"
