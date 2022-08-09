@@ -4,17 +4,19 @@ import { Link } from 'react-router-dom';
 import { getProductsFromId } from '../services/api';
 
 class ProductCard extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const { match: { params: { id } } } = this.props;
 
-    if (JSON.parse(localStorage.getItem('completeComent'))) {
+    if (JSON.parse(localStorage.getItem(id))) {
       this.state = {
-        completeComent: [...JSON.parse(localStorage.getItem('completeComent'))],
+        completeComent: [...JSON.parse(localStorage.getItem(id))],
         product: {},
         inputNumber: 0,
         textArea: '',
         inputEmail: '',
         avaliattion: '',
+        inputPass: true,
       };
     } else {
       this.state = {
@@ -24,6 +26,7 @@ class ProductCard extends React.Component {
         inputEmail: '',
         avaliattion: '',
         completeComent: [],
+        inputPass: true,
       };
     }
   }
@@ -36,8 +39,17 @@ class ProductCard extends React.Component {
     });
   }
 
+  testInput = () => {
+    const { inputEmail } = this.state;
+    if (inputEmail.includes('@') && inputEmail.includes('.com')) {
+      this.setState({
+        inputPass: false,
+      });
+    }
+  }
+
   handleChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value });
+    this.setState({ [name]: value }, () => this.testInput());
   };
 
   handleChangeRadios = ({ target: { value } }) => {
@@ -51,18 +63,27 @@ class ProductCard extends React.Component {
       avaliacao: avaliattion,
       comentario: textArea,
     };
-    this.setState((prevState) => ({
-      completeComent: [...prevState.completeComent, coment],
-      textArea: '',
-      inputEmail: '',
-      avaliattion: '',
-    }));
+    if (inputEmail.includes('@') && inputEmail.includes('.com')) {
+      this.setState((prevState) => ({
+        completeComent: [...prevState.completeComent, coment],
+        textArea: '',
+        inputEmail: '',
+        avaliattion: '',
+      }));
+    } else {
+      this.setState({
+        textArea: '',
+        inputEmail: '',
+        avaliattion: '',
+      });
+    }
   }
 
   render() {
-    const { product, inputNumber, inputEmail, textArea, completeComent } = this.state;
+    const { product, inputNumber, inputEmail,
+      textArea, completeComent, inputPass } = this.state;
     const { salvaNoCarrinho } = this.props;
-    localStorage.setItem('completeComent', JSON.stringify(completeComent));
+    localStorage.setItem(product.id, JSON.stringify(completeComent));
     return (
       <div>
         <p data-testid="product-detail-name">{ product.title }</p>
@@ -92,59 +113,67 @@ class ProductCard extends React.Component {
           Adicionar ao Carrinho
         </button>
         <form>
-          <input
-            data-testid="product-detail-email"
-            onChange={ this.handleChange }
-            value={ inputEmail }
-            type="email"
-            name="inputEmail"
-          />
+          <label htmlFor="inputEmail">
+            Email
+            <input
+              data-testid="product-detail-email"
+              onChange={ this.handleChange }
+              value={ inputEmail }
+              type="email"
+              name="inputEmail"
+            />
+          </label>
           <label htmlFor="avaliattion">
             Avaliação
-            <input
-              data-testid="1-rating"
-              onChange={ this.handleChangeRadios }
-              value="1"
-              id="1"
-              type="radio"
-              name="avaliattion"
-            />
-            1
-            <input
-              data-testid="2-rating"
-              onChange={ this.handleChangeRadios }
-              value="2"
-              id="2"
-              type="radio"
-              name="avaliattion"
-            />
-            2
-            <input
-              data-testid="3-rating"
-              onChange={ this.handleChangeRadios }
-              value="3"
-              id="3"
-              type="radio"
-              name="avaliattion"
-            />
-            3
-            <input
-              data-testid="4-rating"
-              onChange={ this.handleChangeRadios }
-              value="4"
-              id="4"
-              type="radio"
-              name="avaliattion"
-            />
-            4
-            <input
-              data-testid="5-rating"
-              onChange={ this.handleChangeRadios }
-              value="5"
-              type="radio"
-              name="avaliattion"
-            />
-            5
+            <label htmlFor="avaliattion" data-testid="1-rating">
+              <input
+                onChange={ this.handleChangeRadios }
+                value="1"
+                id="1"
+                type="radio"
+                name="avaliattion"
+              />
+              1
+            </label>
+            <label htmlFor="avaliattion" data-testid="2-rating">
+              <input
+                onChange={ this.handleChangeRadios }
+                value="2"
+                id="2"
+                type="radio"
+                name="avaliattion"
+              />
+              2
+            </label>
+            <label htmlFor="avaliattion" data-testid="3-rating">
+              <input
+                onChange={ this.handleChangeRadios }
+                value="3"
+                id="3"
+                type="radio"
+                name="avaliattion"
+              />
+              3
+            </label>
+            <label htmlFor="avaliattion" data-testid="4-rating">
+              <input
+                onChange={ this.handleChangeRadios }
+                value="4"
+                id="4"
+                type="radio"
+                name="avaliattion"
+              />
+              4
+            </label>
+            <label htmlFor="avaliattion" data-testid="5-rating">
+              <input
+                onChange={ this.handleChangeRadios }
+                value="5"
+                type="radio"
+                name="avaliattion"
+              />
+              5
+            </label>
           </label>
           <textarea
             data-testid="product-detail-evaluation"
@@ -163,45 +192,53 @@ class ProductCard extends React.Component {
           </button>
         </form>
         <div>
+          { inputPass && <p data-testid="error-msg">Campos inválidos</p> }
           {completeComent.map((coment) => (
             <div key={ coment.email }>
               <p data-testid="review-card-email">{ coment.email }</p>
-              <input
-                data-testid="1-rating"
-                type="radio"
-                name=""
-                value="1"
-                checked={ coment.avaliacao === '1' }
-              />
-              <input
-                data-testid="2-rating"
-                type="radio"
-                name=""
-                value="2"
-                checked={ coment.avaliacao === '2' }
-              />
-              <input
-                data-testid="3-rating"
-                type="radio"
-                name=""
-                value="3"
-                checked={ coment.avaliacao === '3' }
-              />
-              <input
-                data-testid="4-rating"
-                type="radio"
-                name=""
-                value="4"
-                checked={ coment.avaliacao === '4' }
-              />
-              <input
-                data-testid="5-rating"
-                type="radio"
-                name=""
-                value="5"
-                checked={ coment.avaliacao === '5' }
-              />
-              <p data-testid="product-detail-evaluation">{ coment.comentario }</p>
+              <label data-testid="review-card-rating" htmlFor="radio-review">
+                <input
+                  data-testid="1-rating"
+                  type="radio"
+                  name="radio-review"
+                  value="1"
+                  checked={ coment.avaliacao === '1' }
+                />
+                1
+                <input
+                  data-testid="2-rating"
+                  type="radio"
+                  name="radio-review"
+                  value="2"
+                  checked={ coment.avaliacao === '2' }
+                />
+                2
+                <input
+                  data-testid="3-rating"
+                  type="radio"
+                  name="radio-review"
+                  value="3"
+                  checked={ coment.avaliacao === '3' }
+                />
+                3
+                <input
+                  data-testid="4-rating"
+                  type="radio"
+                  name="radio-review"
+                  value="4"
+                  checked={ coment.avaliacao === '4' }
+                />
+                4
+                <input
+                  data-testid="5-rating"
+                  type="radio"
+                  name="radio-review"
+                  value="5"
+                  checked={ coment.avaliacao === '5' }
+                />
+                5
+              </label>
+              <p data-testid="review-card-evaluation">{ coment.comentario }</p>
             </div>
           ))}
         </div>
