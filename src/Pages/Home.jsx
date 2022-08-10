@@ -91,6 +91,12 @@ class Home extends React.Component {
                     to={ `/product/${item.id}/${searchBar}` }
                   >
                     <div data-testid="product" className="div-category-item">
+                      { item.shipping.free_shipping && (
+                        <p
+                          data-testid="free-shipping"
+                        >
+                          Frete Grátis
+                        </p>)}
                       <img src={ item.thumbnail } alt={ item.title } />
                       <p>{ item.title }</p>
                       <h3>{ item.price }</h3>
