@@ -72,7 +72,7 @@ class ProductCard extends React.Component {
   render() {
     const { product, inputNumber, inputEmail,
       textArea, completeComent, inputPass } = this.state;
-    const { salvaNoCarrinho } = this.props;
+    const { salvaNoCarrinho, itemsCarrinho } = this.props;
     localStorage.setItem(product.id, JSON.stringify(completeComent));
     return (
       <div>
@@ -83,12 +83,15 @@ class ProductCard extends React.Component {
           alt={ product.title }
         />
         <p data-testid="product-detail-price">{ product.price }</p>
-        <Link
-          data-testid="shopping-cart-button"
-          to="/shoppingCart"
-        >
-          Shopping Cart
-        </Link>
+        <div>
+          <p data-testid="shopping-cart-size">{ itemsCarrinho.length }</p>
+          <Link
+            data-testid="shopping-cart-button"
+            to="/shoppingCart"
+          >
+            Shopping Cart
+          </Link>
+        </div>
         <input
           onChange={ this.handleChange }
           value={ inputNumber }
@@ -126,17 +129,14 @@ class ProductCard extends React.Component {
               />
               1
             </label>
-            <label htmlFor="2">
-              <input
-                data-testid="2-rating"
-                onChange={ this.handleChangeRadios }
-                value="2"
-                id="2"
-                type="radio"
-                name="avaliattion"
-              />
-              2
-            </label>
+            <input
+              data-testid="2-rating"
+              onChange={ this.handleChangeRadios }
+              value="2"
+              id="2"
+              type="radio"
+              name="avaliattion"
+            />
             <label htmlFor="3">
               <input
                 data-testid="3-rating"
@@ -244,6 +244,7 @@ ProductCard.propTypes = {
     }).isRequired,
   }).isRequired,
   salvaNoCarrinho: PropTypes.func.isRequired,
+  itemsCarrinho: PropTypes.number.isRequired,
 };
 
 export default ProductCard;
