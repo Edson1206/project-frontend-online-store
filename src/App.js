@@ -35,6 +35,11 @@ class App extends React.Component {
   }
 
   increaseButton = (item) => {
+    const { ItemsCarrinho } = this.state;
+    const filtro = ItemsCarrinho.filter((element) => element.id === item.id).length;
+    if (item.available_quantity <= filtro) {
+      return '';
+    }
     this.setState((prevState) => ({
       ItemsCarrinho: [...prevState.ItemsCarrinho, item],
     }));
