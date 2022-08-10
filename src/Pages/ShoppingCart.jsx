@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 class ShoppingCart extends React.Component {
@@ -43,6 +44,12 @@ class ShoppingCart extends React.Component {
               </button>
             </div>
           </div>)))}
+        <Link
+          to="/purchase"
+          data-testid="checkout-products"
+        >
+          Finalizar compra
+        </Link>
       </div>
     );
   }
