@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './Pages/Home';
 import ShoppingCart from './Pages/ShoppingCart';
 import ProductCard from './Pages/ProductCard';
+import Purchase from './Pages/Purchase';
 
 class App extends React.Component {
   constructor() {
@@ -100,6 +101,11 @@ class App extends React.Component {
                 increaseButton={ this.increaseButton }
                 decreaseButton={ this.decreaseButton }
               />) }
+            />
+            <Route
+              exact
+              path="/purchase"
+              component={ Purchase }
             />
           </Switch>
         </div>
