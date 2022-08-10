@@ -37,10 +37,11 @@ class Home extends React.Component {
 
   render() {
     const { searchBar, listCategories, itemsSearched } = this.state;
-    const { salvaNoCarrinho } = this.props;
+    const { salvaNoCarrinho, itemsCarrinho } = this.props;
     return (
       <div className="container-home">
         <header className="container-header-home">
+          <p data-testid="shopping-cart-size">{ itemsCarrinho }</p>
           <Link data-testid="shopping-cart-button" to="/shoppingCart">ShoppingCart</Link>
           <form className="forms-header-home">
             <input
@@ -113,6 +114,7 @@ class Home extends React.Component {
 }
 Home.propTypes = {
   salvaNoCarrinho: PropTypes.func.isRequired,
+  itemsCarrinho: PropTypes.number.isRequired,
 };
 
 export default Home;

@@ -72,7 +72,7 @@ class ProductCard extends React.Component {
   render() {
     const { product, inputNumber, inputEmail,
       textArea, completeComent, inputPass } = this.state;
-    const { salvaNoCarrinho } = this.props;
+    const { salvaNoCarrinho, itemsCarrinho } = this.props;
     localStorage.setItem(product.id, JSON.stringify(completeComent));
     return (
       <div>
@@ -83,12 +83,15 @@ class ProductCard extends React.Component {
           alt={ product.title }
         />
         <p data-testid="product-detail-price">{ product.price }</p>
-        <Link
-          data-testid="shopping-cart-button"
-          to="/shoppingCart"
-        >
-          Shopping Cart
-        </Link>
+        <div>
+          <p data-testid="shopping-cart-size">{ itemsCarrinho.length }</p>
+          <Link
+            data-testid="shopping-cart-button"
+            to="/shoppingCart"
+          >
+            Shopping Cart
+          </Link>
+        </div>
         <input
           onChange={ this.handleChange }
           value={ inputNumber }
@@ -244,6 +247,7 @@ ProductCard.propTypes = {
     }).isRequired,
   }).isRequired,
   salvaNoCarrinho: PropTypes.func.isRequired,
+  itemsCarrinho: PropTypes.number.isRequired,
 };
 
 export default ProductCard;

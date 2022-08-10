@@ -89,6 +89,7 @@ class App extends React.Component {
               path="/"
               render={ () => (<Home
                 salvaNoCarrinho={ this.salvaNoCarrinho }
+                itemsCarrinho={ ItemsCarrinho.length }
               />) }
             />
             <Route
@@ -97,7 +98,7 @@ class App extends React.Component {
               render={ (props) => (<ProductCard
                 { ...props }
                 salvaNoCarrinho={ this.salvaNoCarrinho }
-                ItemsCarrinho={ ItemsCarrinho }
+                itemsCarrinho={ ItemsCarrinho }
                 increaseButton={ this.increaseButton }
                 decreaseButton={ this.decreaseButton }
               />) }
