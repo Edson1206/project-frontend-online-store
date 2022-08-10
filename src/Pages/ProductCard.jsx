@@ -129,17 +129,14 @@ class ProductCard extends React.Component {
               />
               1
             </label>
-            <label htmlFor="2">
-              <input
-                data-testid="2-rating"
-                onChange={ this.handleChangeRadios }
-                value="2"
-                id="2"
-                type="radio"
-                name="avaliattion"
-              />
-              2
-            </label>
+            <input
+              data-testid="2-rating"
+              onChange={ this.handleChangeRadios }
+              value="2"
+              id="2"
+              type="radio"
+              name="avaliattion"
+            />
             <label htmlFor="3">
               <input
                 data-testid="3-rating"
