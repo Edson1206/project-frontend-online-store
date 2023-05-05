@@ -23,6 +23,7 @@ class App extends React.Component {
   }
 
   salvaNoCarrinho = (item) => {
+    console.log(item.shipping.free_shipping);
     this.setState((prevState) => ({
       ItemsCarrinho: [...prevState.ItemsCarrinho, item],
     }));

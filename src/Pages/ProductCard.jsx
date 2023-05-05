@@ -34,9 +34,7 @@ class ProductCard extends React.Component {
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
     const item = await getProductsFromId(id);
-    this.setState({
-      product: item,
-    });
+    this.setState({ product: item, frete: item.shipping.free_shipping });
   }
 
   handleChange = ({ target: { name, value } }) => {
@@ -49,11 +47,7 @@ class ProductCard extends React.Component {
 
   renderComent = () => {
     const { inputEmail, textArea, avaliattion } = this.state;
-    const coment = {
-      email: inputEmail,
-      avaliacao: avaliattion,
-      comentario: textArea,
-    };
+    const coment = { email: inputEmail, avaliacao: avaliattion, comentario: textArea };
     if (inputEmail.includes('@') && inputEmail.includes('.com') && avaliattion !== '') {
       this.setState((prevState) => ({
         completeComent: [...prevState.completeComent, coment],
@@ -63,19 +57,23 @@ class ProductCard extends React.Component {
         inputPass: false,
       }));
     } else {
-      this.setState({
-        inputPass: true,
-      });
+      this.setState({ inputPass: true });
     }
   }
 
   render() {
     const { product, inputNumber, inputEmail,
-      textArea, completeComent, inputPass } = this.state;
+      textArea, completeComent, inputPass, frete } = this.state;
     const { salvaNoCarrinho, itemsCarrinho } = this.props;
     localStorage.setItem(product.id, JSON.stringify(completeComent));
     return (
       <div>
+        { frete && (
+          <p
+            data-testid="free-shipping"
+          >
+            Frete Grátis
+          </p>)}
         <p data-testid="product-detail-name">{ product.title }</p>
         <img
           data-testid="product-detail-image"
